@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 var app = express();
 const dotenv = require('dotenv');
 dotenv.config();
+
+
 // console.log(`${process.env.PSW}`);
 var port = 3000;
 app.use(bodyParser.json());
@@ -14,11 +16,12 @@ mongoose.connect(
 );
 
 const schema = {
-  title: String,
-  content: String,
+  food_item: String,
+  location_from: String,
+  mass: String
 };
 
-const item = mongoose.model("item", schema);
+const foods = mongoose.model("foods", schema);
 
 // app.use("/", (req, res) => {
 //   res.sendFile(__dirname + "/index.html");
@@ -41,11 +44,11 @@ app.get("/edit", function (req, res) {
 
 app.post("/add-new", function (req, res) {
   console.log("test");
-  let test = new item({
-    title: req.body.title,
-    content: req.body.content,
+  let test = new foods({
+    food_item: req.body.food_item,
+    location_from: req.body.location_from,
   });
-  console.log(req.body.title);
+  console.log(req.body.food_item);
   test.save(function (err, doc) {
     if (err) return console.error(err);
     console.log("Document inserted succussfully!");
@@ -55,13 +58,13 @@ app.post("/add-new", function (req, res) {
 
 app.post("/edit", function (req, res) {
   console.log("editing POST");
-  const filter = { title: cur_code };
+  const filter = { food_item: cur_code };
   // console.log(filter);
-  const update = { content: req.body.content };
+  const update = { location_from: req.body.location_from };
   // console.log(update);
   const opts = { new: true };
 
-  item.findOneAndUpdate(filter, update, { new: true }, function (err, result) {
+  foods.findOneAndUpdate(filter, update, { new: true }, function (err, result) {
     if (err) {
       res.send(err);
     } else {
@@ -76,7 +79,7 @@ app.post("/edit", function (req, res) {
 app.post("/exsists", function (req, res) {
   console.log("test");
 
-  item.exists({ title: req.body.code }, function (err, result) {
+  foods.exists({ food_item: req.body.code }, function (err, result) {
     if (err) {
       console.log(err);
     } else {
@@ -96,3 +99,10 @@ app.post("/exsists", function (req, res) {
 app.listen(port, () => {
   console.log("Server listening on port " + port);
 });
+
+function gen_produt_code(food_type, location_from){
+  out;
+  num items;
+
+  out = `${}`
+}
