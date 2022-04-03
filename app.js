@@ -2,15 +2,17 @@ var express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 var app = express();
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
 dotenv.config();
-
+const Hashids = require("hashids/cjs");
+const hashids = new Hashids();
 
 // console.log(`${process.env.PSW}`);
 var port = 3000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 var cur_code;
+// app.set('view engine', 'ejs');
 mongoose.connect(
   `mongodb+srv://trossos:${process.env.PSW}@cluster0.gkfih.mongodb.net/myFirstDatabase`
 );
@@ -18,14 +20,11 @@ mongoose.connect(
 const schema = {
   food_item: String,
   location_from: String,
-  mass: String
+  mass: String,
+  product_code: String,
 };
 
 const foods = mongoose.model("foods", schema);
-
-// app.use("/", (req, res) => {
-//   res.sendFile(__dirname + "/index.html");
-// });
 
 app.get("/", function (req, res) {
   res.sendFile(__dirname + "/index.html");
@@ -42,18 +41,45 @@ app.get("/edit", function (req, res) {
   res.sendFile(__dirname + "/edit.html");
 });
 
-app.post("/add-new", function (req, res) {
-  console.log("test");
+app.get("/display-code", function (req, res) {
+  res.render(__dirname + "/display-code.ejs", { code: cur_code });
+});
+app.get("/jagger", function (req, res) {
+  foods.find({}, function(err, data) {
+    // note that data is an array of objects, not a single object!
+    console.log(data);
+    res.render(__dirname + "/jagger.ejs", {
+        foods: data
+    });
+});
+});
+
+
+app.post("/add-new", async (req, res) => {
+  // const estimate = await foods.estimatedDocumentCount();
+
+  // console.log(typeof(idInt));
+  // console.log(idInt);
+  // test.product_code = idInt;
   let test = new foods({
-    food_item: req.body.food_item,
+    food_item: req.body.food_type,
     location_from: req.body.location_from,
+    mass: req.body.mass,
   });
-  console.log(req.body.food_item);
+  console.log("\n\n\n\n");
+  var idStr = fix_id(test._id.valueOf());
+  console.log(typeof(idStr));
+  var idInt = hashids.encode((BigInt(idStr)));
+  console.log(hashids.encode(idInt));
+  test.product_code = idInt;
+  cur_code = test.product_code;
+  console.log(test.product_code);
+  console.log(test);
   test.save(function (err, doc) {
     if (err) return console.error(err);
     console.log("Document inserted succussfully!");
   });
-  res.redirect("/");
+  res.redirect("/display-code");
 });
 
 app.post("/edit", function (req, res) {
@@ -74,12 +100,10 @@ app.post("/edit", function (req, res) {
   res.redirect("/");
 });
 
-
-
 app.post("/exsists", function (req, res) {
   console.log("test");
 
-  foods.exists({ food_item: req.body.code }, function (err, result) {
+  foods.exists({ product_code: req.body.code }, function (err, result) {
     if (err) {
       console.log(err);
     } else {
@@ -93,16 +117,21 @@ app.post("/exsists", function (req, res) {
       }
     }
   });
-  // res.redirect("/");
 });
+function fix_id(id) {
+  console.log(id);
+  var out = "";
+  for (var i = 0; i < id.length; i++) {
+    if (id.charCodeAt(i) < 58) {
+      out += id.charAt(i);
+    } else {
+      out += id.charCodeAt(i);
+    }
+  }
+  console.log(out);
+  return out;
+}
 
 app.listen(port, () => {
   console.log("Server listening on port " + port);
 });
-
-function gen_produt_code(food_type, location_from){
-  out;
-  num items;
-
-  out = `${}`
-}

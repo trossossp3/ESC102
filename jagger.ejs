@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+          }
+          
+          th, td {
+            text-align: left;
+            padding: 8px;
+          }
+          
+          tr:nth-child(even){background-color: #f2f2f2}
+          
+          th {
+            background-color: #04AA6D;
+            color: white;
+          }
+    </style>
+  </head>
+
+  <body>
+    <h1>ALL DOCUMENTS <br /></h1>
+    <table>
+        <tr>
+            <th>code</th>
+            <th>mass</th>
+            <th>item</th>
+            <th>location_from</th>
+        </tr>
+    <tr>
+       
+      </tr>
+    <% foods.forEach(function (food) { %>
+        <tr>
+          <td>  <%= food.product_code %> </td><!-- note you defined the field as Name not name -->
+            <td><%= food.mass %></td>
+            <td><%= food.food_item %></td>
+            <td><%= food.location_from %></td>
+        </tr>
+            <% }) %>
+    </table>
+  </body>
+ 
+</html>
