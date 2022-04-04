@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 var cur_code;
 // app.set('view engine', 'ejs');
 mongoose.connect(
-  `mongodb+srv://trossos:${process.env.PSW}@cluster0.gkfih.mongodb.net/myFirstDatabase`
+  `mongodb+srv://trossos:${process.env.PSW}@cluster0.gkfih.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
 );
 
 const schema = {
@@ -45,15 +45,14 @@ app.get("/display-code", function (req, res) {
   res.render(__dirname + "/display-code.ejs", { code: cur_code });
 });
 app.get("/jagger", function (req, res) {
-  foods.find({}, function(err, data) {
+  foods.find({}, function (err, data) {
     // note that data is an array of objects, not a single object!
     console.log(data);
     res.render(__dirname + "/jagger.ejs", {
-        foods: data
+      foods: data,
     });
+  });
 });
-});
-
 
 app.post("/add-new", async (req, res) => {
   // const estimate = await foods.estimatedDocumentCount();
@@ -68,8 +67,8 @@ app.post("/add-new", async (req, res) => {
   });
   console.log("\n\n\n\n");
   var idStr = fix_id(test._id.valueOf());
-  console.log(typeof(idStr));
-  var idInt = hashids.encode((BigInt(idStr)));
+  console.log(typeof idStr);
+  var idInt = hashids.encode(BigInt(idStr));
   console.log(hashids.encode(idInt));
   test.product_code = idInt;
   cur_code = test.product_code;
@@ -82,21 +81,31 @@ app.post("/add-new", async (req, res) => {
   res.redirect("/display-code");
 });
 
-app.post("/edit", function (req, res) {
+app.post("/edit", async (req, res) => {
   console.log("editing POST");
-  const filter = { food_item: cur_code };
-  // console.log(filter);
-  const update = { location_from: req.body.location_from };
-  // console.log(update);
+  const temp = await foods.findOne({product_code: cur_code});
+  console.log("curr element" + temp)
+  const filter = { product_code: cur_code };
+  console.log(filter);
+  const update = new foods({
+    $set: {
+      food_item: req.body.food_type,
+      // location_from: req.body.location_from,
+      // mass: req.body.mass,
+    },
+  });
+  console.log(update);
   const opts = { new: true };
 
-  foods.findOneAndUpdate(filter, update, { new: true }, function (err, result) {
-    if (err) {
-      res.send(err);
-    } else {
-      console.log(cur_code + " updated");
-    }
+
+  const result = await foods.updateOne(filter, {
+    $set: {
+      food_item: req.body.food_type,
+      location_from: req.body.location_from,
+      mass: req.body.mass,
+    },
   });
+
   res.redirect("/");
 });
 
