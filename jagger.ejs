@@ -35,8 +35,10 @@
        
       </tr>
     <% foods.forEach(function (food) { %>
+     
         <tr>
-          <td>  <%= food.product_code %> </td><!-- note you defined the field as Name not name -->
+
+          <td>  <%= food.product_code %> </td>
             <td><%= food.mass %></td>
             <td><%= food.food_item %></td>
             <td><%= food.location_from %></td>

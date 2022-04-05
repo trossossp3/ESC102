@@ -38,7 +38,14 @@ app.get("/bad-input", function (req, res) {
 });
 
 app.get("/edit", function (req, res) {
-  res.sendFile(__dirname + "/edit.html");
+  foods.find({product_code: cur_code}, function(err, data){
+    console.log("data:"+data);
+    res.render(__dirname + "/edit.ejs", {foods:data});
+  })
+
+
+
+  // res.render(__dirname + "/edit.ejs", {test:20});
 });
 
 app.get("/display-code", function (req, res) {
@@ -87,14 +94,8 @@ app.post("/edit", async (req, res) => {
   console.log("curr element" + temp)
   const filter = { product_code: cur_code };
   console.log(filter);
-  const update = new foods({
-    $set: {
-      food_item: req.body.food_type,
-      // location_from: req.body.location_from,
-      // mass: req.body.mass,
-    },
-  });
-  console.log(update);
+  
+  // console.log(update);
   const opts = { new: true };
 
 
