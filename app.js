@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 var cur_code;
 // app.set('view engine', 'ejs');
 mongoose.connect(
-  `mongodb+srv://trossos:test@cluster0.gkfih.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
+  `mongodb+srv://trossos:test@cluster0.gkfih.mongodb.net/myFirstDatabase?retryWrites=true&w=majority&authSource=admin`
 );
 
 const schema = {
@@ -68,7 +68,7 @@ app.post("/add-new", async (req, res) => {
   // console.log(idInt);
   // test.product_code = idInt;
 
-  
+
   let test = new foods({
     food_item: req.body.food_type,
     location_from: req.body.location_from,
