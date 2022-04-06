@@ -54,3 +54,23 @@ input[type=text], select {
 .button:hover{
   background-color: #45a049;
 }
+
+
+.home {
+  display: block;
+  width: fit-content;
+  height: 25px;
+  background: #6e6e6e;
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  line-height: 25px;
+  text-decoration: none;
+
+}
+
+.home:hover{
+background-color: black;
+}
