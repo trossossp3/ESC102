@@ -1,7 +1,6 @@
 {
   "name": "feeditforward",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -21,5 +20,15 @@
     "express": "^4.17.3",
     "hashids": "^2.2.10",
     "mongoose": "^6.2.9"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trossossp3/ESC102.git"
+  },
+  "bugs": {
+    "url": "https://github.com/trossossp3/ESC102/issues"
+  },
+  "homepage": "https://github.com/trossossp3/ESC102#readme",
+  "description": ""
 }
