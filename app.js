@@ -8,7 +8,7 @@ const Hashids = require("hashids/cjs");
 const hashids = new Hashids();
 
 // console.log(`${process.env.PSW}`);
-var port = 3000;
+var port = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 var cur_code;
