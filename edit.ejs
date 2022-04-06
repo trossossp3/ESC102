@@ -2,9 +2,10 @@
 <html>
   <head>
     <title></title>
+    <link rel="stylesheet" href="/add_new.css">
     <style>
       div.c {
-        position: absolute;
+        position: static;
         right: 45%;
         width: 350px;
         height: 120px;
@@ -17,32 +18,32 @@
     <h1>EDIT ENTRY</h1>
    
 
-    <div class = "c">
+    
+    <br>
+
     <% foods.forEach(function (food) { %>
      
         
 
-        Product code: <%= food.product_code %> <br>
-      Mass: <%= food.mass %><br>
-      food_item: <%= food.food_item %><br>
-        location_from: <%= food.location_from %><br>
+      Product code: <%= food.product_code %> <br><br>
         
-        <% }) %>
-    </div>
-
-
 
 
     <form method="POST" action="/edit">
-      <label>Enter Your FOOD_TYPE</label>
-      <input type="text" name="food_type" /><br>
-      <label>Enter Your LOCATION_FROM</label>
-      <input type="text" name="location_from" /><br>
-      <label>Enter MASS</label>
-      <input type="text" name="mass" /><br>
+      <label>Current food_item: <%= food.food_item %></label><br>
+      <label></label>
+     
+      <input type="text" name="food_type" placeholder = "Enter New Food Type"/><br>
+      Current Location From: <%= food.location_from %><br>
+      <label></label>
+      <input type="text" name="location_from" placeholder="Enter new Location From"/><br>
+      Current Mass: <%= food.mass %><br>
+      <label></label>
+      <input type="text" name="mass" placeholder="Enter new Mass" /><br>
       <input type="submit" />
     </form>
-    
+    <% }) %>
+
 
   </body>
 
