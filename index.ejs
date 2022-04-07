@@ -1,32 +1,30 @@
-<!DOCTYPE html>
+
 <html>
   <head>
-    <title>FEED</title>
+    <title></title>
     <link rel="stylesheet" href="/add_new.css">
   </head>
 
   <body>
     <h1>Feed It Forward Inventory Managment System</h1>
 
-    <!-- <form method="POST" action="/">
-      <label>Enter Your Name</label><br />
-      <input type="text" name="title" />
-      <input type="text" name="content" />
-      <input type="submit" />
-    </form> -->
+    <a class="button" href="/add-new">Add New Item</a>
+    <br />
+    <a class="button" href="/enter-code">Edit ITEM</a>
+    <br />
+    <% if (is_admin === true) { %>
 
-    <a class = "button" href = "/add-new">ADD NEW ITEM</a>
+    <a class="button" href="/jagger">View Inventory System</a>
+    <% } %>
 
+    <br />
 
-
-
-
+    <!--     
     <h1>EDIT Existing PRODUCT</h1>
     <form method = "POST" action="/exsists">
         <label>enter product code</label>
         <input type = "text" name="code">
         <input type = "submit" />
-    </form>
-
+    </form> -->
   </body>
 </html>

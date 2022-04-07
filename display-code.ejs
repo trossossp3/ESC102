@@ -6,12 +6,35 @@
   </head>
 
   <body>
-    <h1>PRODUCT CODE IS</h1> <h1 style = "color: red;"><%= code %></h1>
+    <!-- <h1>PRODUCT CODE IS</h1> <h1 style = "color: red;"><%= foods %></h1> -->
+    <h1>Product Added</h1>
+
+    <% foods.forEach(function (food) { %>
+     
+        
+
+      <label style="color:red">Product code: <%= food.product_code %> <br><br></label>
+        
+
+
+    <form method="POST" action="/edit">
+      <label>Current food_item: <%= food.food_item %></label><br>
+    
+     
+  
+    
+      <label>  Current Location From: <%= food.location_from %><br></label>
+     
+      
+      <label>Current Mass: <%= food.mass %><br></label>
 
     
-    <a class = "home" href = "/">HOME PAGE</a>
+    </form>
+    <% }) %>
+<br>
+    
+    <a class = "home" href = "/index">HOME PAGE</a>
 
   </body>
-  <script>var name = "<%= code %>";
-  console.log("hellelellellelelel"+name);</script>
+ 
 </html>

@@ -5,14 +5,17 @@ var app = express();
 const dotenv = require("dotenv");
 dotenv.config();
 const Hashids = require("hashids/cjs");
+const { redirect } = require("express/lib/response");
+const { is } = require("express/lib/request");
 const hashids = new Hashids();
 
 // console.log(`${process.env.PSW}`);
 var port = process.env.PORT || 3000;
-app.use(express.static('css'))
+app.use(express.static("css"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 var cur_code;
+var is_admin = false;
 // app.set('view engine', 'ejs');
 mongoose.connect(
   `mongodb+srv://trossos:test@cluster0.gkfih.mongodb.net/myFirstDatabase?retryWrites=true&w=majority&authSource=admin`
@@ -28,7 +31,15 @@ const schema = {
 const foods = mongoose.model("foods", schema);
 
 app.get("/", function (req, res) {
-  res.sendFile(__dirname + "/index.html");
+  res.sendFile(__dirname + "/home.html");
+});
+
+app.get("/index", function (req, res) {
+  res.render(__dirname + "/index.ejs", {is_admin: is_admin});
+});
+
+app.get("/enter-code", function (req, res) {
+  res.render(__dirname + "/enter-code.ejs");
 });
 
 app.get("/add-new", function (req, res) {
@@ -39,19 +50,21 @@ app.get("/bad-input", function (req, res) {
 });
 
 app.get("/edit", function (req, res) {
-  foods.find({product_code: cur_code}, function(err, data){
-    console.log("data:"+data);
-    res.render(__dirname + "/edit.ejs", {foods:data});
-  })
-
-
+  foods.find({ product_code: cur_code }, function (err, data) {
+    console.log("data:" + data);
+    res.render(__dirname + "/edit.ejs", { foods: data });
+  });
 
   // res.render(__dirname + "/edit.ejs", {test:20});
 });
 
 app.get("/display-code", function (req, res) {
-  res.render(__dirname + "/display-code.ejs", { code: cur_code });
+  foods.find({ product_code: cur_code }, function (err, data) {
+    console.log("data:" + data);
+    res.render(__dirname + "/display-code.ejs", { foods: data });
+  });
 });
+
 app.get("/jagger", function (req, res) {
   foods.find({}, function (err, data) {
     // note that data is an array of objects, not a single object!
@@ -68,7 +81,6 @@ app.post("/add-new", async (req, res) => {
   // console.log(typeof(idInt));
   // console.log(idInt);
   // test.product_code = idInt;
-
 
   let test = new foods({
     food_item: req.body.food_type,
@@ -93,14 +105,13 @@ app.post("/add-new", async (req, res) => {
 
 app.post("/edit", async (req, res) => {
   console.log("editing POST");
-  const temp = await foods.findOne({product_code: cur_code});
-  console.log("curr element" + temp)
+  const temp = await foods.findOne({ product_code: cur_code });
+  console.log("curr element" + temp);
   const filter = { product_code: cur_code };
   console.log(filter);
-  
+
   // console.log(update);
   const opts = { new: true };
-
 
   const result = await foods.updateOne(filter, {
     $set: {
@@ -110,7 +121,7 @@ app.post("/edit", async (req, res) => {
     },
   });
 
-  res.redirect("/");
+  res.redirect("/index");
 });
 
 app.post("/exsists", function (req, res) {
@@ -130,6 +141,19 @@ app.post("/exsists", function (req, res) {
       }
     }
   });
+});
+
+app.post("/volunteer", async (req, res) => {
+  is_admin = false;
+  console.log(is_admin);
+  res.redirect("/index")
+
+});
+app.post("/admin", async (req, res) => {
+  is_admin = true;
+  console.log(is_admin);
+  res.redirect("/index")
+
 });
 function fix_id(id) {
   console.log(id);
