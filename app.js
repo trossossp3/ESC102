@@ -16,6 +16,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 var cur_code;
 var is_admin = false;
+
+
+var helper = require('./functions');
 // app.set('view engine', 'ejs');
 mongoose.connect(
   `mongodb+srv://trossos:test@cluster0.gkfih.mongodb.net/myFirstDatabase?retryWrites=true&w=majority&authSource=admin`
@@ -26,12 +29,15 @@ var schema = new Schema({
   location_from: String,
   mass: String,
   product_code: String
+},
+{
+  timestamps:true
 });
 
-schema.index({location_from: "text"});
+schema.index({location_from: "text", food_item: "text", mass:"text", product_code:"text"});
 
 const foods = mongoose.model("foods", schema);
-
+// await foods.collection.dropIndexes();
 app.get("/", function (req, res) {
   res.sendFile(__dirname + "/home.html");
 });
@@ -69,21 +75,16 @@ app.get("/display-code", function (req, res) {
 
 app.get("/jagger", function (req, res) {
   foods.find({}, function (err, data) {
-    // note that data is an array of objects, not a single object!
-    // console.log(data);
+
     res.render(__dirname + "/jagger.ejs", {
       foods: data,
+      helper: helper,
     });
   });
 });
 
 app.post("/add-new", async (req, res) => {
-  // const estimate = await foods.estimatedDocumentCount();
-
-  // console.log(typeof(idInt));
-  // console.log(idInt);
-  // test.product_code = idInt;
-
+ 
   let test = new foods({
     food_item: req.body.food_type,
     location_from: req.body.location_from,
@@ -127,10 +128,17 @@ app.post("/edit", async (req, res) => {
 });
 app.post("/search", async (req, res) => {
   // const resa = await foods.index({food_item: "text"});
-  var results = foods.find({ $text: { $search: "\"Bread\"" } });
+  var search = req.body.term;
+  console.log("SEARCH TERM"+search);
+  var results = foods.find({ $text: { $search: search } });
   const docs = await results;
-  console.log(docs);
+  console.log("FOUND DOCS"+docs);
   
+    res.render(__dirname + "/jagger.ejs", {
+      foods: docs,
+      helper: helper,
+    });
+ 
 });
 
 app.post("/exsists", function (req, res) {

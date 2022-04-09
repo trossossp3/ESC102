@@ -26,13 +26,19 @@
   <body>
     <h1>ALL DOCUMENTS <br /></h1>
     <table>
+      <form method="POST" action = "/search">
+        <label>Enter Search term</label>
+        <input type = "text" name="term">
+        <input type = "submit" />
 
+      </form>
       <!-- <label>Search for </label> -->
         <tr>
             <th>code</th>
             <th>mass</th>
             <th>item</th>
             <th>location_from</th>
+            <th>Date</th>
         </tr>
     <tr>
        
@@ -45,6 +51,8 @@
             <td><%= food.mass %></td>
             <td><%= food.food_item %></td>
             <td><%= food.location_from %></td>
+            <td><%= food.createdAt.toLocaleTimeString() %></td>
+            <td><%= helper.formatTime(food.createdAt) %></td>
         </tr>
             <% }) %>
     </table>
