@@ -1,3 +1,6 @@
-for PRODUCT CODE
-
-like maybe something like where the first couple digits are location then like food type then unmber
+const schema = {
+  food_item: String,
+  location_from: String,
+  mass: String,
+  product_code: String,
+};
