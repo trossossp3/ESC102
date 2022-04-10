@@ -1,5 +1,5 @@
 function formatTime(date) {
-  var x = date.getHours();
+  var x = date.toLocaleTimeString();
   console.log(x);
 }
 module.exports = {
