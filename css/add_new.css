@@ -1,11 +1,22 @@
+
+@font-face {
+  font-family: 'Among Us';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Among Us'), url('https://fonts.cdnfonts.com/s/52178/AmongUs-Regular.woff') format('woff');
+}
+
+@import url('http://fonts.cdnfonts.com/css/among-us');
+
 body {
-  font-family: "Open Sans";
+  font-family: 'Among Us', sans-serif;
+  text-transform: uppercase;
   font-size: large;
-  background-color: #01252c;
+  background-color: #01172c;
   color: white;
 }
 h1 {
-  color: #c53867;
+  color: white;
   text-align: center;
 }
 input[type="text"],
@@ -21,8 +32,8 @@ select {
 }
 input[type="submit"] {
   width: 100%;
-  background-color: #55bf98;
-  color: black;
+  background-color: #4f78c6;
+  color: white;
   padding: 14px 20px;
   margin: 8px 0;
   border: none;
@@ -33,7 +44,7 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-  background-color: #528975;
+  background-color: #27498a;
 }
 
 div {
@@ -46,11 +57,11 @@ div {
   /* display: block; */
   width: 30%;
   height: 25px;
-  background-color: #55bf98;
+  background-color: #4f78c6;
   padding: 10px;
   text-align: center;
   border-radius: 5px;
-  color: black;
+  color: white;
   /* font-weight: bold; */
   line-height: 25px;
   text-decoration: none;
@@ -60,7 +71,7 @@ div {
 }
 
 .button:hover {
-  background-color: #528975;
+  background-color: #27498a;
 }
 
 .home {
