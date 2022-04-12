@@ -1,60 +1,67 @@
-body{
-  font-family: Arial, Helvetica, sans-serif;
+body {
+  font-family: "Open Sans";
+  font-size: large;
+  background-color: #01252c;
+  color: white;
+}
+h1 {
+  color: #c53867;
+  text-align: center;
+}
+input[type="text"],
+select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
   font-size: large;
 }
-input[type=text], select {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: large;
-  }
-
-  
-  input[type=submit] {
-    width: 100%;
-    background-color: #2f7134;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: larger;
-  }
-  
-  input[type=submit]:hover {
-    background-color: #45a049;
-  }
-
-  div {
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    padding: 20px;
-  }
-
-  .button {
-    display: block;
-    width: fit-content;
-    height: 25px;
-    background: #2f7134;
-    padding: 10px;
-    text-align: center;
-    border-radius: 5px;
-    color: white;
-    font-weight: bold;
-    line-height: 25px;
-    text-decoration: none;
-
+input[type="submit"] {
+  width: 100%;
+  background-color: #55bf98;
+  color: black;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: larger;
+  font-family: "Open Sans";
 }
 
-.button:hover{
-  background-color: #45a049;
+input[type="submit"]:hover {
+  background-color: #528975;
 }
 
+div {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+.button {
+  /* display: block; */
+  width: 30%;
+  height: 25px;
+  background-color: #55bf98;
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+  color: black;
+  /* font-weight: bold; */
+  line-height: 25px;
+  text-decoration: none;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.button:hover {
+  background-color: #528975;
+}
 
 .home {
   display: block;
@@ -68,9 +75,8 @@ input[type=text], select {
   font-weight: bold;
   line-height: 25px;
   text-decoration: none;
-
 }
 
-.home:hover{
-background-color: black;
+.home:hover {
+  background-color: black;
 }

@@ -6,20 +6,40 @@
             test
         </title>
         <link rel="stylesheet" href="/add_new.css">
-   
+        <style>
+            body{
+                color: white;
+            }
+            #log{
+              width: 50%;  
+              display: block;
+              margin-right: auto;
+              margin-left: auto;
+              margin-top: auto;
+              margin-bottom: auto;
+              top: 50%;
+              background-color: #55bf98;
+              color: black;
+            }
+            #log:hover {
+                background-color: #528975;
+              }
+          
+        </style>
     </head>
     <body>
+        <h1>Feed It Forward Invenotry Mangment</h1>
+        <br>
+        <br>
         <form method="POST" action="/volunteer">
             <!-- <label>Volunteer</label> -->
-            <input type = "submit" value="Volunteer"/>
+            <input id = "log" type = "submit" value="Volunteer"/>
         </form>
-        <form method="POST" action="/admin">
+        <form  method="POST" action="/admin">
             <!-- <label>Admin</label> -->
-            <input type = "submit" value="Admin" />
+            <input id = "log" type = "submit" value="Admin" />
         </form>
-        <form action="/search" method="POST">
-            <button name="foo" value="upvote">Upvote</button>
-        </form>
+      
         
         
         <script src="" async defer></script>

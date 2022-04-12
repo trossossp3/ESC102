@@ -11,30 +11,36 @@ const hashids = new Hashids();
 const Schema = mongoose.Schema;
 // console.log(`${process.env.PSW}`);
 var port = process.env.PORT || 3000;
-app.use(express.static("css"));
+app.use(express.static(__dirname + "/css/"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 var cur_code;
 var is_admin = false;
 
-
-var helper = require('./functions');
+var helper = require("./functions");
 // app.set('view engine', 'ejs');
 mongoose.connect(
   `mongodb+srv://trossos:test@cluster0.gkfih.mongodb.net/myFirstDatabase?retryWrites=true&w=majority&authSource=admin`
 );
 
-var schema = new Schema({
-  food_item: String,
-  location_from: String,
-  mass: String,
-  product_code: String
-},
-{
-  timestamps:true
-});
+var schema = new Schema(
+  {
+    food_item: String,
+    location_from: String,
+    mass: String,
+    product_code: String,
+  },
+  {
+    timestamps: true,
+  }
+);
 
-schema.index({location_from: "text", food_item: "text", mass:"text", product_code:"text"});
+schema.index({
+  location_from: "text",
+  food_item: "text",
+  mass: "text",
+  product_code: "text",
+});
 
 const foods = mongoose.model("foods", schema);
 // await foods.collection.dropIndexes();
@@ -75,7 +81,6 @@ app.get("/display-code", function (req, res) {
 
 app.get("/jagger", function (req, res) {
   foods.find({}, function (err, data) {
-
     res.render(__dirname + "/jagger.ejs", {
       foods: data,
       helper: helper,
@@ -84,26 +89,39 @@ app.get("/jagger", function (req, res) {
 });
 
 app.post("/add-new", async (req, res) => {
- 
   let test = new foods({
     food_item: req.body.food_type,
     location_from: req.body.location_from,
     mass: req.body.mass,
   });
   //console.log("\n\n\n\n");
-  var idStr = fix_id(test._id.valueOf());
-  //console.log(typeof idStr);
-  var idInt = hashids.encode(BigInt(idStr));
-  //console.log(hashids.encode(idInt));
-  test.product_code = idInt;
-  cur_code = test.product_code;
-  //console.log(test.product_code);
-  //console.log(test);
-  test.save(function (err, doc) {
-    if (err) return //console.error(err);
-    console.log("Document inserted succussfully!");
+  var id;
+  await test.save(async (err, doc) => {
+    if (err) return; //console.error(err);
+    console.log(doc._id);
+    id = await doc._id;
+    console.log("id is" + id);
+
+    // console.log(id);
+    var mili = test.createdAt.getMilliseconds();
+    console.log(mili);
+    var letters = test.food_item.substring(0, 2).toUpperCase();
+    var cat = letters + mili;
+    console.log(cat);
+    test.product_code = cat;
+    console.log(id);
+    const result = await foods.updateOne(
+      { _id: id },
+      {
+        $set: {
+          product_code: cat,
+        },
+      }
+    );
+    cur_code = cat;
+    console.log(result);
+    res.redirect("/display-code");
   });
-  res.redirect("/display-code");
 });
 
 app.post("/edit", async (req, res) => {
@@ -129,16 +147,19 @@ app.post("/edit", async (req, res) => {
 app.post("/search", async (req, res) => {
   // const resa = await foods.index({food_item: "text"});
   var search = req.body.term;
-  console.log("SEARCH TERM"+search);
-  var results = foods.find({ $text: { $search: search } });
-  const docs = await results;
-  console.log("FOUND DOCS"+docs);
-  
-    res.render(__dirname + "/jagger.ejs", {
-      foods: docs,
-      helper: helper,
-    });
- 
+  var docs;
+  if (search == "") {
+    docs = await foods.find({});
+  } else {
+    console.log("SEARCH TERM" + search);
+    var results = foods.find({ $text: { $search: search } });
+    var docs = await results;
+    console.log("FOUND DOCS" + docs);
+  }
+  res.render(__dirname + "/jagger.ejs", {
+    foods: docs,
+    helper: helper,
+  });
 });
 
 app.post("/exsists", function (req, res) {

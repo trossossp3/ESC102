@@ -1,0 +1,78 @@
+body{
+    font-family: 'Open Sans';
+    font-size: large;
+    background-color: #01252c;
+    color: white;
+  }
+  input[type=text], select {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: large;
+    }
+  
+    
+    input[type=submit] {
+      width: 100%;
+      background-color: #55bf98;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: larger;
+    }
+    
+    input[type=submit]:hover {
+      background-color: #45a049;
+    }
+  
+    div {
+      border-radius: 5px;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+  
+    .button {
+      display: block;
+      width: fit-content;
+      height: 25px;
+      background: #2f7134;
+      padding: 10px;
+      text-align: center;
+      border-radius: 5px;
+      color: white;
+      font-weight: bold;
+      line-height: 25px;
+      text-decoration: none;
+  
+  }
+  
+  .button:hover{
+    background-color: #45a049;
+  }
+  
+  
+  .home {
+    display: block;
+    width: fit-content;
+    height: 25px;
+    background: #6e6e6e;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    line-height: 25px;
+    text-decoration: none;
+  
+  }
+  
+  .home:hover{
+  background-color: black;
+  }
