@@ -61,7 +61,7 @@ app.post("/test", async (req, res) => {
   console.log("hel")
   await console.log(req.body.productId);
   cur_code = req.body.productId;
-  res.redirect("/edit");
+  res.redirect("/edit-table");
 });
 
 app.get("/index", function (req, res) {
@@ -78,6 +78,15 @@ app.get("/add-new", function (req, res) {
 app.get("/bad-input", function (req, res) {
   res.sendFile(__dirname + "/bad-input.html");
 });
+app.get("/edit-table", function (req, res) {
+  foods.find({ product_code: cur_code }, function (err, data) {
+    // console.log("data:" + data);
+    res.render(__dirname + "/edit-table.ejs", { foods: data, is_admin:is_admin });
+  });
+
+  // res.render(__dirname + "/edit.ejs", {test:20});
+});
+
 
 app.get("/edit", function (req, res) {
   foods.find({ product_code: cur_code }, function (err, data) {
@@ -156,11 +165,35 @@ app.post("/edit", async (req, res) => {
       food_item: req.body.food_type,
       location_from: req.body.location_from,
       mass: req.body.mass,
-      bbb:req.body.bbb
+      bbb:req.body.bbb,
+      location_to: req.body.location_to
     },
   });
 
   res.redirect("/index");
+});
+
+app.post("/edit-table", async (req, res) => {
+  console.log("editing POST");
+  const temp = await foods.findOne({ product_code: cur_code });
+  // console.log("curr element" + temp);
+  const filter = { product_code: cur_code };
+  //console.log(filter);
+
+  // console.log(update);
+  const opts = { new: true };
+
+  const result = await foods.updateOne(filter, {
+    $set: {
+      food_item: req.body.food_type,
+      location_from: req.body.location_from,
+      mass: req.body.mass,
+      bbb:req.body.bbb,
+      location_to: req.body.location_to
+    },
+  });
+
+  res.redirect("/jagger");
 });
 app.post("/search", async (req, res) => {
   // const resa = await foods.index({food_item: "text"});
