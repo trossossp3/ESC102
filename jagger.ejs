@@ -78,7 +78,7 @@
             <td><%= food.location_from %></td> 
              <td><%= food.location_to %></td>
              <td><%= food.bbb %></td>
-            <td><%= food.createdAt.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}); %></td>
+            <td><%= food.createdAt.toLocaleTimeString([], {timeZone: "America/New_York", hour: '2-digit', minute: '2-digit'}); %></td>
             <td><%= food.createdAt.toLocaleDateString() %></td>
           
            
