@@ -1,9 +1,5 @@
-function formatTime() {
-  console.log(test);
-  global.test =0;
-  console.log(test);
-}
-module.exports = {
-    formatTime: formatTime,
-    
+function formatTime(change) {
+  // console.log(test);
+  global.test =change;
+  // console.log(test);
 }

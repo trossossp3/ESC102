@@ -18,6 +18,7 @@ var cur_code;
 var is_admin = false;
 global.test =100;
 var helper = require("./functions");
+app.use(express.static("./functions"));
 // app.set('view engine', 'ejs');
 mongoose.connect(
   `mongodb+srv://trossos:test@cluster0.gkfih.mongodb.net/myFirstDatabase?retryWrites=true&w=majority&authSource=admin`
@@ -53,6 +54,7 @@ app.get("/", function (req, res) {
 });
 app.get("/test", function (req, res) {
   console.log("test");
+  console.log(test)
   
   // res.render(__dirname + "/index.ejs", { is_admin: is_admin });
 });
