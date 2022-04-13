@@ -9,7 +9,7 @@
 @import url('http://fonts.cdnfonts.com/css/among-us');
 
 body {
-  font-family: 'Among Us', sans-serif;
+  font-family:  sans-serif;
   text-transform: uppercase;
   font-size: large;
   background-color: #01172c;
@@ -41,7 +41,7 @@ input[type="submit"] {
   cursor: pointer;
   font-size: larger;
   text-transform: uppercase;
-              font-family: 'Among Us', sans-serif;
+              font-family:  sans-serif;
   
 }
 

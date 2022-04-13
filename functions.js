@@ -1,6 +1,7 @@
-function formatTime(date) {
-  var x = date.toLocaleTimeString();
-  console.log(x);
+function formatTime() {
+  console.log(test);
+  global.test =0;
+  console.log(test);
 }
 module.exports = {
     formatTime: formatTime,

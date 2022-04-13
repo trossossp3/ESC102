@@ -2,6 +2,8 @@
 <html>
   <head>
     <link rel="stylesheet" href="/add_new.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <!-- <script src="functions.js"></script> -->
     <title></title>
     <style>
         table {
@@ -42,6 +44,7 @@
         <input id = "search" type = "submit" value= "Search"/>
 
       </form>
+      <td><%= help.formatTime()%></td>
       <!-- <label>Search for </label> -->
         <tr>
             <th>Product Code</th>
@@ -50,10 +53,13 @@
             <th>location From</th>
             <th>Time Created</th>
             <th>Date Created</th>
+            <th>Destination</th>
+            <th>action</th>
         </tr>
     <tr>
        
       </tr>
+    
     <% foods.forEach(function (food) { %>
      
         <tr>
@@ -64,11 +70,25 @@
             <td><%= food.location_from %></td>
             <td><%= food.createdAt.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}); %></td>
             <td><%= food.createdAt.toLocaleDateString() %></td>
-        </tr>
+            <td><%= food.location_to %></td>
+           
+            <td><form  method="POST" action="/volunteer"> <input type="submit" class = "checkbox" name="productId" value="<%= food.food_item %>"> | ADD </td>
+            </form>
+          </tr>
             <% }) %>
     </table>
   
     <a class = "home" href = "/index">HOME PAGE</a>
   </body>
- 
+ <script>
+  
+   console.log(window.test);
+   $('.checkbox').click(function() {
+    var productId  = $(this).closest("tr").find('td:eq(0)').text();
+    
+    $.get('/test');
+    console.log(productId);
+    alert(productId);
+  })
+ </script>
 </html>

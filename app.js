@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 var cur_code;
 var is_admin = false;
-
+global.test =100;
 var helper = require("./functions");
 // app.set('view engine', 'ejs');
 mongoose.connect(
@@ -29,6 +29,8 @@ var schema = new Schema(
     location_from: String,
     mass: String,
     product_code: String,
+    location_to: String,
+    bbb: String
   },
   {
     timestamps: true,
@@ -40,12 +42,19 @@ schema.index({
   food_item: "text",
   mass: "text",
   product_code: "text",
+  location_to: "text",
+  bbb: "text"
 });
 
 const foods = mongoose.model("foods", schema);
 // await foods.collection.dropIndexes();
 app.get("/", function (req, res) {
   res.sendFile(__dirname + "/home.html");
+});
+app.get("/test", function (req, res) {
+  console.log("test");
+  
+  // res.render(__dirname + "/index.ejs", { is_admin: is_admin });
 });
 
 app.get("/index", function (req, res) {
@@ -83,7 +92,7 @@ app.get("/jagger", function (req, res) {
   foods.find({}, function (err, data) {
     res.render(__dirname + "/jagger.ejs", {
       foods: data,
-      helper: helper,
+      help: helper,
     });
   });
 });
@@ -93,6 +102,7 @@ app.post("/add-new", async (req, res) => {
     food_item: req.body.food_type,
     location_from: req.body.location_from,
     mass: req.body.mass,
+    bbb:req.body.bbb
   });
   //console.log("\n\n\n\n");
   var id;
@@ -139,6 +149,7 @@ app.post("/edit", async (req, res) => {
       food_item: req.body.food_type,
       location_from: req.body.location_from,
       mass: req.body.mass,
+      bbb:req.body.bbb
     },
   });
 
