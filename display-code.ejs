@@ -3,6 +3,38 @@
   <head>
     <title></title>
     <link rel="stylesheet" href="/add_new.css">
+    <style>
+
+      #test{
+        line-height: 30px;
+      }
+      #q{
+        
+        color:black;
+       
+      }
+      body{
+        text-align: center;
+        display: block;
+      }
+      #temp{
+        
+        
+          width: fit-content;
+          height: 25px;
+          background: #6e6e6e;
+          padding: 10px;
+          text-align: center;
+          border-radius: 5px;
+          color: white;
+          font-weight: bold;
+          line-height: 25px;
+          text-decoration: none;
+        }
+      #temp:hover{
+        background-color: black;
+      }
+    </style>
   </head>
 
   <body>
@@ -11,13 +43,15 @@
 
     <% foods.forEach(function (food) { %>
      
-        
 
-      <label style="color:#55bf98">Product code: <%= food.product_code %> <br><br></label>
-        
+     
+      <label id = "code" style="border:3px solid black; padding:10px">Product code: <%= food.product_code %></label>
+      <br>
+      <br>
 
 
-    <form method="POST" action="/edit">
+
+    <form id = "test"method="POST" action="/edit">
       <label>Current food_item: <%= food.food_item %></label><br>
     
      
@@ -27,13 +61,14 @@
      
       
       <label>Current Mass: <%= food.mass %><br></label>
+      <label>Current Best Before Date: <%= food.bbb %><br></label>
 
     
     </form>
     <% }) %>
 <br>
     
-    <a class = "home" href = "/index">HOME PAGE</a>
+    <a id="temp" href = "/index">HOME PAGE</a>
 
   </body>
  

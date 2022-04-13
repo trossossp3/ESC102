@@ -17,8 +17,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 var cur_code;
 var is_admin = false;
 global.test =100;
-var helper = require("./functions");
-app.use(express.static("./functions"));
+app.use(express.static(__dirname + "/public/"));
+var helper = require("./public/functions");
+// app.use(express.static("./functions"));
 // app.set('view engine', 'ejs');
 mongoose.connect(
   `mongodb+srv://trossos:test@cluster0.gkfih.mongodb.net/myFirstDatabase?retryWrites=true&w=majority&authSource=admin`
@@ -52,11 +53,15 @@ const foods = mongoose.model("foods", schema);
 app.get("/", function (req, res) {
   res.sendFile(__dirname + "/home.html");
 });
-app.get("/test", function (req, res) {
-  console.log("test");
-  console.log(test)
-  
-  // res.render(__dirname + "/index.ejs", { is_admin: is_admin });
+
+app.post("/test", async (req, res) => {
+
+  //console.log(is_admin);
+  // res.redirect("/index");
+  console.log("hel")
+  await console.log(req.body.productId);
+  cur_code = req.body.productId;
+  res.redirect("/edit");
 });
 
 app.get("/index", function (req, res) {
@@ -77,7 +82,7 @@ app.get("/bad-input", function (req, res) {
 app.get("/edit", function (req, res) {
   foods.find({ product_code: cur_code }, function (err, data) {
     // console.log("data:" + data);
-    res.render(__dirname + "/edit.ejs", { foods: data });
+    res.render(__dirname + "/edit.ejs", { foods: data, is_admin:is_admin });
   });
 
   // res.render(__dirname + "/edit.ejs", {test:20});
@@ -199,6 +204,8 @@ app.post("/volunteer", async (req, res) => {
   //console.log(is_admin);
   res.redirect("/index");
 });
+
+
 app.post("/admin", async (req, res) => {
   is_admin = true;
   //console.log(is_admin);

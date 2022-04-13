@@ -4,7 +4,6 @@
    
     <link rel="stylesheet" href="/add_new.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
-    <script type="text/javascript" src = "./functions.js"></script>
     <!-- <script src="functions.js"></script> -->
     <title></title>
     <style>
@@ -35,7 +34,6 @@
             margin: 1%;
           }
     </style>
-   
   </head>
 
   <body>
@@ -53,13 +51,16 @@
       <!-- <label>Search for </label> -->
         <tr>
             <th>Product Code</th>
-            <th>Mass</th>
             <th>Item Name</th>
+            <th>Mass</th>
+            
             <th>location From</th>
+            <th>Destination</th>
+            <th>Best Before Date</th>
             <th>Time Created</th>
             <th>Date Created</th>
-            <th>Destination</th>
-           
+        
+            <th>Edit</th>
         </tr>
     <tr>
        
@@ -70,29 +71,28 @@
         <tr>
 
           <td>  <%= food.product_code %> </td>
-            <td><%= food.mass %></td>
-            <td><%= food.food_item %></td>
-            <td><%= food.location_from %></td>
+            <td><%= food.food_item %></td> 
+             <td><%= food.mass %></td>
+          
+            <td><%= food.location_from %></td> 
+             <td><%= food.location_to %></td>
+             <td><%= food.bbb %></td>
             <td><%= food.createdAt.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}); %></td>
             <td><%= food.createdAt.toLocaleDateString() %></td>
-            <td><%= food.location_to %></td>
+          
            
-
+            <td><form method="POST" action="/test">
+              
+              <input type="checkbox" onChange="this.form.submit()" class = "checkbox" id = "killme" name="productId" value="<%= food.product_code%>"></td>
+            </form>
           </tr>
             <% }) %>
     </table>
-  
+   
     <a class = "home" href = "/index">HOME PAGE</a>
   </body>
  <script>
-  
-   console.log(window.test);
-   $('.checkbox').click(function() {
-    var productId  = $(this).closest("tr").find('td:eq(0)').text();
-    
-    $.get('/test');
-    console.log(productId);
-    alert(productId);
-  })
+
+ 
  </script>
 </html>

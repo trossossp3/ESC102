@@ -41,7 +41,15 @@
       Current Mass: <%= food.mass %><br>
       <label></label>
       <input type="text" name="mass" placeholder="Enter new Mass" /><br>
-      
+      Current Best Before Date: <%= food.bbb %><br>
+      <label></label>
+      <input type="text" name="bbb" placeholder="Enter new Best Before Date" /><br>
+      <% if (is_admin === true) { %>
+
+        Current Destination: <%= food.location_to %><br>
+      <label></label>
+      <input type="text" name="location_to" placeholder="Enter new Destination" /><br>
+        <% } %>
       <input type="submit" />
     </form>
     <% }) %>
