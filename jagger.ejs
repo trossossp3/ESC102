@@ -61,6 +61,7 @@
             <th>Date Created</th>
         
             <th>Edit</th>
+            <th>Delete</th>
         </tr>
     <tr>
        
@@ -85,10 +86,16 @@
               
               <input type="checkbox" onChange="this.form.submit()" class = "checkbox" id = "killme" name="productId" value="<%= food.product_code%>"></td>
             </form>
+            <td><form method="POST" action="/delete">
+              
+              <input type="checkbox" onChange="this.form.submit()" class = "checkbox" id = "delete" name="delete" value="<%= food.product_code%>">
+            </td>
+            </form>
           </tr>
             <% }) %>
     </table>
-   
+   <br>
+   <br>
     <a class = "home" href = "/index">HOME PAGE</a>
   </body>
  <script>

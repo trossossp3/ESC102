@@ -63,6 +63,22 @@ app.post("/test", async (req, res) => {
   cur_code = req.body.productId;
   res.redirect("/edit-table");
 });
+app.get("/", function (req, res) {
+  res.sendFile(__dirname + "/home.html");
+});
+
+
+app.post("/delete", async (req, res) => {
+
+  console.log("delete")
+  await console.log(req.body.delete);
+  cur_code = req.body.delete;
+  await foods.deleteOne({product_code:cur_code});
+  res.redirect("/jagger");
+
+});
+
+
 
 app.get("/index", function (req, res) {
   res.render(__dirname + "/index.ejs", { is_admin: is_admin });
