@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link rel="stylesheet" href="/add_new.css" />
+    <style>
+      div.c {
+        position: static;
+        right: 45%;
+        width: 350px;
+        height: 120px;
+        border: 3px solid green;
+      }
+      body {
+        text-align: center;
+        display: block;
+      }
+      #temp{
+        
+        
+        width: fit-content;
+        height: 25px;
+        background: #6e6e6e;
+        padding: 10px;
+        text-align: center;
+        border-radius: 5px;
+        color: white;
+        font-weight: bold;
+        line-height: 25px;
+        text-decoration: none;
+      }
+    #temp:hover{
+      background-color: black;
+    }
+    </style>
+  </head>
+
+  <body>
+    <h1>View Item</h1>
+
+    <br />
+
+    <% foods.forEach(function (food) { %> Product code: <%= food.product_code %>
+    <br /><br />
+
+    <label>Current food_item: <%= food.food_item %></label><br />
+
+    Current Location From: <%= food.location_from %><br />
+
+    Current Amount: <%= food.mass %><br />
+
+    Current Best Before Date: <%= food.bbb.toLocaleDateString() %><br />
+
+    <% if (is_admin === true) { %> Current Destination: <%= food.location_to
+    %><br />
+
+    <% } %> <% }) %>
+    <br>
+    <br>
+
+    <a  id="temp" href="/index">HOME PAGE</a>
+  </body>
+
+  <script></script>
+</html>

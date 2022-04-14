@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html>
-
   <head>
     <title></title>
-    <link rel="stylesheet" href="/add_new.css">
+    <link rel="stylesheet" href="/add_new.css" />
     <style>
       div.c {
         position: static;
@@ -11,55 +10,63 @@
         width: 350px;
         height: 120px;
         border: 3px solid green;
-      } 
+      }
     </style>
   </head>
 
   <body>
     <h1>EDIT ENTRY</h1>
- 
 
-    
-    <br>
+    <br />
 
-    <% foods.forEach(function (food) { %>
-     
-        
-
-      Product code: <%= food.product_code %> <br><br>
-        
-
+    <% foods.forEach(function (food) { %> Product code: <%= food.product_code %>
+    <br /><br />
 
     <form method="POST" action="/edit">
-      <label>Current food_item: <%= food.food_item %></label><br>
+      <label>Current food_item: <%= food.food_item %></label><br />
       <label></label>
-     
-      <input type="text" name="food_type" placeholder = "Enter New Food Type"/><br>
-      Current Location From: <%= food.location_from %><br>
-      <label></label>
-      <input type="text" name="location_from" placeholder="Enter new Location From"/><br>
-      Current Mass: <%= food.mass %><br>
-      <label></label>
-      <input type="text" name="mass" placeholder="Enter new Mass" /><br>
-      Current Best Before Date: <%= food.bbb %><br>
-      <label></label>
-      <input type="text" name="bbb" placeholder="Enter new Best Before Date" /><br>
-      <% if (is_admin === true) { %>
 
-        Current Destination: <%= food.location_to %><br>
+      <input
+        type="text"
+        name="food_type"
+        placeholder="Enter New Food Type"
+      /><br />
+      Current Location From: <%= food.location_from %><br />
       <label></label>
-      <input type="text" name="location_to" placeholder="Enter new Destination" /><br>
-        <% } %>
+      <input
+        type="text"
+        name="location_from"
+        placeholder="Enter new Location From"
+      /><br />
+      Current Amount: <%= food.mass %><br />
+      <label></label>
+      <input type="text" name="mass" placeholder="Enter new Amount" /><br />
+      Current Best Before Date: <%= food.bbb.toLocaleDateString() %><br />
+      <label></label>
+      <input
+        type="date"
+        id = "test"
+        name="bbb"
+        placeholder="Enter new Best Before Date"
+        value="<%= food.bbb.toLocaleDateString() %>"
+      /><br />
+      <% if (is_admin === true) { %> Current Destination: <%= food.location_to
+      %><br />
+      <label></label>
+      <input
+        type="text"
+        name="location_to"
+        placeholder="Enter new Destination"
+      /><br />
+      <% } %>
       <input type="submit" />
     </form>
     <% }) %>
-    
-    <a class = "home" href = "/index">HOME PAGE</a>
 
+    <a class="home" href="/index">HOME PAGE</a>
   </body>
 
   <script>
-
-
+  
   </script>
 </html>

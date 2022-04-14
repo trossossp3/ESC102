@@ -32,7 +32,7 @@ var schema = new Schema(
     mass: String,
     product_code: String,
     location_to: String,
-    bbb: String
+    bbb: Date
   },
   {
     timestamps: true,
@@ -45,7 +45,7 @@ schema.index({
   mass: "text",
   product_code: "text",
   location_to: "text",
-  bbb: "text"
+ 
 });
 
 const foods = mongoose.model("foods", schema);
@@ -63,6 +63,7 @@ app.post("/test", async (req, res) => {
   cur_code = req.body.productId;
   res.redirect("/edit-table");
 });
+
 app.get("/", function (req, res) {
   res.sendFile(__dirname + "/home.html");
 });
@@ -88,12 +89,18 @@ app.get("/enter-code", function (req, res) {
   res.render(__dirname + "/enter-code.ejs");
 });
 
+app.get("/enter-code-view", function (req, res) {
+  res.render(__dirname + "/enter-code-view.ejs");
+});
+
 app.get("/add-new", function (req, res) {
   res.sendFile(__dirname + "/add-new.html");
 });
+
 app.get("/bad-input", function (req, res) {
   res.sendFile(__dirname + "/bad-input.html");
 });
+
 app.get("/edit-table", function (req, res) {
   foods.find({ product_code: cur_code }, function (err, data) {
     // console.log("data:" + data);
@@ -109,10 +116,18 @@ app.get("/edit", function (req, res) {
     // console.log("data:" + data);
     res.render(__dirname + "/edit.ejs", { foods: data, is_admin:is_admin });
   });
-
+  
   // res.render(__dirname + "/edit.ejs", {test:20});
 });
 
+app.get("/view", function (req, res) {
+  foods.find({ product_code: cur_code }, function (err, data) {
+    // console.log("data:" + data);
+    res.render(__dirname + "/view.ejs", { foods: data, is_admin:is_admin });
+  });
+  
+  // res.render(__dirname + "/edit.ejs", {test:20});
+});
 app.get("/display-code", function (req, res) {
   foods.find({ product_code: cur_code }, function (err, data) {
     // console.log("data:" + data);
@@ -229,6 +244,25 @@ app.post("/search", async (req, res) => {
   });
 });
 
+
+app.post("/exsists-view", function (req, res) {
+  //console.log("test");
+
+  foods.exists({ product_code: req.body.code }, function (err, result) {
+    if (err) {
+      //console.log(err);
+    } else {
+      //console.log(result);
+      if (result == null) {
+        res.redirect("/bad-input");
+      } else {
+        cur_code = req.body.code;
+        //console.log(cur_code);
+        res.redirect("/view");
+      }
+    }
+  });
+});
 app.post("/exsists", function (req, res) {
   //console.log("test");
 

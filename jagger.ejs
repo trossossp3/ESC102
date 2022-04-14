@@ -52,7 +52,7 @@
         <tr>
             <th>Product Code</th>
             <th>Item Name</th>
-            <th>Mass</th>
+            <th>Amount</th>
             
             <th>location From</th>
             <th>Destination</th>
@@ -77,7 +77,7 @@
           
             <td><%= food.location_from %></td> 
              <td><%= food.location_to %></td>
-             <td><%= food.bbb %></td>
+             <td><%= food.bbb.toLocaleDateString()%></td>
             <td><%= food.createdAt.toLocaleTimeString([], {timeZone: "America/New_York", hour: '2-digit', minute: '2-digit'}); %></td>
             <td><%= food.createdAt.toLocaleDateString() %></td>
           
@@ -98,6 +98,7 @@
    <br>
     <a class = "home" href = "/index">HOME PAGE</a>
   </body>
+  
  <script>
 
  
