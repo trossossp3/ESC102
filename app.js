@@ -172,7 +172,6 @@ app.get("/archive", function (req, res) {
   });
 });
 
-
 app.post("/add-new", async (req, res) => {
   let test = new foods({
     food_item: req.body.food_type,
@@ -292,7 +291,8 @@ app.post("/exsists-view", function (req, res) {
   });
 });
 app.post("/archive", async (req, res) => {
-  foods.findOne({ product_code: req.body.completed }, async  (err, result) =>{
+  foods.findOne({ product_code: req.body.completed }, async (err, result) => {
+   var cur = req.body.completed;
     console.log(req.body.completed);
     console.log(result);
     let swap = new done(result.toJSON()); //or result.toObject
@@ -300,14 +300,13 @@ app.post("/archive", async (req, res) => {
     swap._id = mongoose.Types.ObjectId()
     swap.isNew = true
     */
-
+    await swap.save();
     await foods.deleteOne({ product_code: req.body.completed });
-    swap.save();
+
     res.redirect("/archive");
 
     // swap is now in a better place
   });
-  
 });
 
 app.post("/exsists", function (req, res) {
