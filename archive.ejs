@@ -39,7 +39,7 @@
   <body>
      
 <!-- <input type = "button" onclick = "formatTime(100000)" value = "Click Me"> -->
-    <h1>All Items <br /></h1>
+    <h1>Archived Items <br /></h1>
     <table>
       <form method="POST" action = "/search">
         <label></label>
@@ -60,8 +60,8 @@
             <th>Time Created</th>
             <th>Date Created</th>
         
-            <th>Edit</th>
-            <th>Completed</th>
+          
+          
             <th>Delete</th>
 
         </tr>
@@ -84,15 +84,7 @@
             <td><%= food.createdAt.toLocaleDateString() %></td>
           
            
-            <td><form method="POST" action="/test">
-              
-              <input type="checkbox" onChange="this.form.submit()" class = "checkbox" id = "killme" name="productId" value="<%= food.product_code%>"></td>
-            </form>
-            <td><form method="POST" action="/archive">
-              
-              <input type="checkbox" onChange="this.form.submit()" class = "checkbox" id = "" name="completed" value="<%= food.product_code%>">
-            </td>
-            </form>
+           
 
             <td><form method="POST" action="/delete">
               

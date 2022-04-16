@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 var cur_code;
 var is_admin = false;
-global.test =100;
+global.test = 100;
 app.use(express.static(__dirname + "/public/"));
 var helper = require("./public/functions");
 // app.use(express.static("./functions"));
@@ -32,7 +32,7 @@ var schema = new Schema(
     mass: String,
     product_code: String,
     location_to: String,
-    bbb: Date
+    bbb: Date,
   },
   {
     timestamps: true,
@@ -45,20 +45,43 @@ schema.index({
   mass: "text",
   product_code: "text",
   location_to: "text",
- 
 });
+
+var schemaD = new Schema(
+  {
+    food_item: String,
+    location_from: String,
+    mass: String,
+    product_code: String,
+    location_to: String,
+    bbb: Date,
+  },
+  {
+    timestamps: true,
+  }
+);
+
+schemaD.index({
+  location_from: "text",
+  food_item: "text",
+  mass: "text",
+  product_code: "text",
+  location_to: "text",
+});
+
+const done = mongoose.model("done", schemaD);
 
 const foods = mongoose.model("foods", schema);
 // await foods.collection.dropIndexes();
+
 app.get("/", function (req, res) {
   res.sendFile(__dirname + "/home.html");
 });
 
 app.post("/test", async (req, res) => {
-
   //console.log(is_admin);
   // res.redirect("/index");
-  console.log("hel")
+  console.log("hel");
   await console.log(req.body.productId);
   cur_code = req.body.productId;
   res.redirect("/edit-table");
@@ -68,18 +91,13 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + "/home.html");
 });
 
-
 app.post("/delete", async (req, res) => {
-
-  console.log("delete")
+  console.log("delete");
   await console.log(req.body.delete);
   cur_code = req.body.delete;
-  await foods.deleteOne({product_code:cur_code});
+  await foods.deleteOne({ product_code: cur_code });
   res.redirect("/jagger");
-
 });
-
-
 
 app.get("/index", function (req, res) {
   res.render(__dirname + "/index.ejs", { is_admin: is_admin });
@@ -104,28 +122,30 @@ app.get("/bad-input", function (req, res) {
 app.get("/edit-table", function (req, res) {
   foods.find({ product_code: cur_code }, function (err, data) {
     // console.log("data:" + data);
-    res.render(__dirname + "/edit-table.ejs", { foods: data, is_admin:is_admin });
+    res.render(__dirname + "/edit-table.ejs", {
+      foods: data,
+      is_admin: is_admin,
+    });
   });
 
   // res.render(__dirname + "/edit.ejs", {test:20});
 });
 
-
 app.get("/edit", function (req, res) {
   foods.find({ product_code: cur_code }, function (err, data) {
     // console.log("data:" + data);
-    res.render(__dirname + "/edit.ejs", { foods: data, is_admin:is_admin });
+    res.render(__dirname + "/edit.ejs", { foods: data, is_admin: is_admin });
   });
-  
+
   // res.render(__dirname + "/edit.ejs", {test:20});
 });
 
 app.get("/view", function (req, res) {
   foods.find({ product_code: cur_code }, function (err, data) {
     // console.log("data:" + data);
-    res.render(__dirname + "/view.ejs", { foods: data, is_admin:is_admin });
+    res.render(__dirname + "/view.ejs", { foods: data, is_admin: is_admin });
   });
-  
+
   // res.render(__dirname + "/edit.ejs", {test:20});
 });
 app.get("/display-code", function (req, res) {
@@ -143,13 +163,22 @@ app.get("/jagger", function (req, res) {
     });
   });
 });
+app.get("/archive", function (req, res) {
+  done.find({}, function (err, data) {
+    res.render(__dirname + "/archive.ejs", {
+      foods: data,
+      help: helper,
+    });
+  });
+});
+
 
 app.post("/add-new", async (req, res) => {
   let test = new foods({
     food_item: req.body.food_type,
     location_from: req.body.location_from,
     mass: req.body.mass,
-    bbb:req.body.bbb
+    bbb: req.body.bbb,
   });
   //console.log("\n\n\n\n");
   var id;
@@ -196,8 +225,8 @@ app.post("/edit", async (req, res) => {
       food_item: req.body.food_type,
       location_from: req.body.location_from,
       mass: req.body.mass,
-      bbb:req.body.bbb,
-      location_to: req.body.location_to
+      bbb: req.body.bbb,
+      location_to: req.body.location_to,
     },
   });
 
@@ -219,8 +248,8 @@ app.post("/edit-table", async (req, res) => {
       food_item: req.body.food_type,
       location_from: req.body.location_from,
       mass: req.body.mass,
-      bbb:req.body.bbb,
-      location_to: req.body.location_to
+      bbb: req.body.bbb,
+      location_to: req.body.location_to,
     },
   });
 
@@ -244,7 +273,6 @@ app.post("/search", async (req, res) => {
   });
 });
 
-
 app.post("/exsists-view", function (req, res) {
   //console.log("test");
 
@@ -263,6 +291,25 @@ app.post("/exsists-view", function (req, res) {
     }
   });
 });
+app.post("/archive", async (req, res) => {
+  foods.findOne({ product_code: req.body.completed }, async  (err, result) =>{
+    console.log(req.body.completed);
+    console.log(result);
+    let swap = new done(result.toJSON()); //or result.toObject
+    /* you could set a new id
+    swap._id = mongoose.Types.ObjectId()
+    swap.isNew = true
+    */
+
+    await foods.deleteOne({ product_code: req.body.completed });
+    swap.save();
+    res.redirect("/archive");
+
+    // swap is now in a better place
+  });
+  
+});
+
 app.post("/exsists", function (req, res) {
   //console.log("test");
 
@@ -287,7 +334,6 @@ app.post("/volunteer", async (req, res) => {
   //console.log(is_admin);
   res.redirect("/index");
 });
-
 
 app.post("/admin", async (req, res) => {
   is_admin = true;
