@@ -33,6 +33,15 @@
             padding: auto;
             margin: 1%;
           }
+          input[type="submit"].checkbox{
+            background-color: red;
+            height: 15px;
+            width: 15px;
+            text-align: center;
+            color:transparent;
+            border: 2px solid black;
+            padding: 0px;
+          }
     </style>
   </head>
 
@@ -94,9 +103,9 @@
             </td>
             </form>
 
-            <td><form method="POST" action="/delete">
+            <td><form id="Q" name="del" method="POST" action="/delete">
               
-              <input type="checkbox" onChange="this.form.submit()" class = "checkbox" id = "delete" name="delete" value="<%= food.product_code%>">
+              <input   type="submit" id = " <%=food.product_code%>" onclick="myCuteFunction(this.id)" class = "checkbox"  name="delete" placeholder = "test" value="<%= food.product_code%>">
             </td>
             </form>
           </tr>
@@ -109,7 +118,18 @@
   </body>
   
  <script>
-
+  function myCuteFunction(x) {    
+    console.log(x+"Q");
+    var y = x+"Q";
+    console.log(y);
+      var form = document.getElementById("Q");
+      console.log(form);
+      let result = confirm("Do you want to delete item?");
+      if (result){
+        document.getElementById("Q").submit();
+      }
+    }
+  
  
  </script>
 </html>

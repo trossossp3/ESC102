@@ -98,6 +98,14 @@ app.post("/delete", async (req, res) => {
   await foods.deleteOne({ product_code: cur_code });
   res.redirect("/jagger");
 });
+app.post("/delete-arc", async (req, res) => {
+  console.log("delete");
+  await console.log(req.body.delete);
+  cur_code = req.body.delete;
+  await done.deleteOne({ product_code: cur_code });
+  res.redirect("/archive");
+});
+
 
 app.get("/index", function (req, res) {
   res.render(__dirname + "/index.ejs", { is_admin: is_admin });
@@ -303,7 +311,7 @@ app.post("/archive", async (req, res) => {
     await swap.save();
     await foods.deleteOne({ product_code: req.body.completed });
 
-    res.redirect("/archive");
+    res.redirect("/jagger");
 
     // swap is now in a better place
   });
