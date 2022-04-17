@@ -22,8 +22,7 @@ var helper = require("./public/functions");
 // app.use(express.static("./functions"));
 // app.set('view engine', 'ejs');
 mongoose.connect(
-  `mongodb+srv://trossos:test@cluster0.gkfih.mongodb.net/myFirstDatabase?retryWrites=true&w=majority&authSource=admin`
-);
+  `mongodb+srv://trossos:test@cluster0.gkfih.mongodb.net/myFirstDatabase?retryWrites=true&w=majority&authSource=admin`);
 
 var schema = new Schema(
   {
