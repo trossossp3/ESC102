@@ -68,7 +68,7 @@
             <th>Best Before Date</th>
             <th>Time Created</th>
             <th>Date Created</th>
-        
+          <th>Unarchive</th>
           
           
             <th>Delete</th>
@@ -94,6 +94,11 @@
           
            
            
+            <td><form method="POST" action="/un-archive">
+              
+              <input type="checkbox" onChange="this.form.submit()" class = "checkbox" id = "" name="completed" value="<%= food.product_code%>">
+            </td>
+            </form>
 
             <td>
               <form onSubmit="return confirm('Are you sure you wish to delete?');" id="Q" name="del" method="POST" action="/delete-arc">

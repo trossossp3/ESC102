@@ -316,6 +316,24 @@ app.post("/archive", async (req, res) => {
   });
 });
 
+app.post("/un-archive", async (req, res) => {
+  done.findOne({ product_code: req.body.completed }, async (err, result) => {
+   var cur = req.body.completed;
+    console.log(req.body.completed);
+    console.log(result);
+    let swap = new foods(result.toJSON()); //or result.toObject
+    /* you could set a new id
+    swap._id = mongoose.Types.ObjectId()
+    swap.isNew = true
+    */
+    await swap.save();
+    await done.deleteOne({ product_code: req.body.completed });
+
+    res.redirect("/archive");
+
+    // swap is now in a better place
+  });
+});
 app.post("/exsists", function (req, res) {
   //console.log("test");
 
