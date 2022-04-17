@@ -34,13 +34,13 @@
       <label>Current food_item: <%= food.food_item %></label><br>
       <label></label>
      
-      <input type="text" name="food_type" placeholder = "Enter New Food Type"/><br>
+      <input type="text" name="food_type" placeholder="Enter new Food Item" value = "<%= food.food_item%>"/><br>
       Current Location From: <%= food.location_from %><br>
       <label></label>
-      <input type="text" name="location_from" placeholder="Enter new Location From"/><br>
+      <input type="text" name="location_from" placeholder="Enter new Location From" value = "<%= food.location_from%>"/><br>
       Current Amount: <%= food.mass %><br>
       <label></label>
-      <input type="text" name="mass" placeholder="Enter new Amount" /><br>
+      <input type="text" name="mass" placeholder="Enter new Amount" value = "<%= food.mass%>"/><br>
       Current Best Before Date: <%= food.bbb.toLocaleDateString() %><br>
       <label></label>
       <input type="date" name="bbb" placeholder="Enter new Best Before Date" value = "<%= food.bbb.toLocaleDateString() %>" /><br>
@@ -48,7 +48,7 @@
 
         Current Destination: <%= food.location_to %><br>
       <label></label>
-      <input type="text" name="location_to" placeholder="Enter new Destination" /><br>
+      <input type="text" name="location_to" placeholder="Enter new Destination" value = "<%= food.location_to %>"/><br>
         <% } %>
       <input type="submit" />
     </form>
