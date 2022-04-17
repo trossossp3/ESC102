@@ -50,14 +50,18 @@
         placeholder="Enter new Best Before Date"
         value="<%= food.bbb.toLocaleDateString() %>"
       /><br />
-      <% if (is_admin === true) { %> Current Destination: <%= food.location_to
-      %><br />
+      <% if (is_admin === true) { %> 
+        Current Destination: <%= food.location_to %>
+     <br />
       <label></label>
       <input
         type="text"
         name="location_to"
         placeholder="Enter new Destination"
       /><br />
+      <% }else{ %>
+        <br>
+        Current Destination: <%= food.location_to %>
       <% } %>
       <input type="submit" />
     </form>
